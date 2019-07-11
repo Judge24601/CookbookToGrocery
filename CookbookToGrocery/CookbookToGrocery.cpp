@@ -1,11 +1,19 @@
 // CookbookToGrocery.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "pch.h"
-#include <iostream>
+ #include "pch.h"
+ #include <iostream>
 
 int main()
 {
+	tesseract::TessBaseAPI tess;
+
+	if (tess.Init("./", "eng"))
+	{
+		std::cout << "OCRTesseract: Could not initialize tesseract." << std::endl;
+		return 1;
+	}
+
     std::cout << "Hello World!\n"; 
 }
 

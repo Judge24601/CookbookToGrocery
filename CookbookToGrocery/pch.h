@@ -10,5 +10,7 @@
 #define PCH_H
 
 // TODO: add headers that you want to pre-compile here
+#include <leptonica/allheaders.h>
+#include <tesseract/baseapi.h>
 
 #endif //PCH_H
