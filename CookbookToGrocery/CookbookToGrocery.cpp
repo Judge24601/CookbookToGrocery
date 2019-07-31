@@ -3,6 +3,8 @@
 
  #include "pch.h"
  #include <iostream>
+ #include <algorithm>
+ #include <fstream>
 
 int main()
 {
@@ -32,21 +34,21 @@ int main()
 	// get result and delete[] returned char* string
 	char* raw_results = tess.GetUTF8Text();
 	std::string results = std::string(raw_results);
-	
+	std::replace(results.begin(), results.end(), '|', 'l');
 	std::vector<std::string> raw_ingredients;
 	int position = 0;
-	while (results.find('\n\n', position) != std::string::npos) {
-		raw_ingredients.push_back(results.substr(position, results.find('\n\n', position) - position));
-		position = results.find('\n\n', position) + 1;
+	while (results.find("\n\n", position) != std::string::npos) {
+		raw_ingredients.push_back(results.substr(position, results.find("\n\n", position) - position));
+		position = results.find("\n\n", position) + 2;
 	}
-
+	std::ofstream file;
+	file.open("output.txt");
 	for (int i = 0; i < raw_ingredients.size(); i++) {
+		std::replace(raw_ingredients[i].begin(), raw_ingredients[i].end(), '\n', ' ');
 		std::cout << "Ingredient " << i << ": " << raw_ingredients[i] << std::endl;
+		file << raw_ingredients[i] << "|";
 	}
-
-	//TODO: Determine lexer/parser for ingredients
-	//Some research needed.
-	
+	file.close();
 
 	delete[] raw_results;
 
